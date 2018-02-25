@@ -1,5 +1,4 @@
 import scrapy
-from tutorial.items import TutorialItem
 #搜索开始索引
 searchStart = 20
 #搜索数目
@@ -12,11 +11,11 @@ class GithubSpider(scrapy.Spider):
     allowed_domains = ["github.com"]
     url = 'https://github.com/tensorflow/tensorflow/issues/'
     start_urls = []
+
     for pageNum in range(searchStart, searchStart + searchNum):
         start_urls.append(url + '/' + str(pageNum))
 
     def parse(self, response):
-        item = TutorialItem()
         title = response.selector.css('#partial-discussion-header > div.gh-header-show > h1 > span.js-issue-title::text').extract()
         for keyWord in searchWords:
             if keyWord in title[0]:
